@@ -14,7 +14,7 @@ while True:
             'Enter the size for Tic Tac Toe board:')).strip()))
         break
     except ValueError as e:
-        print("Invalid size. Please enter valid intenger for board size")
+        print("Invalid size. Please enter valid intenger for board size. Minimum size is 3")
 
 game.show_instructions()
 

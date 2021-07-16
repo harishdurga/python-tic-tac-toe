@@ -114,6 +114,8 @@ class TicTacToe(TicTacToeInterface):
         return False, ''
 
     def set_board_size(self, size: int):
+        if size < 3:
+            raise ValueError
         self.__game_board = {}
         self.__board_size = size
         for i in range(size*size):
