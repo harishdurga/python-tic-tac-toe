@@ -1,4 +1,5 @@
 from interfaces import TicTacToeInterface
+import math
 
 
 class TicTacToe(TicTacToeInterface):
@@ -17,17 +18,10 @@ class TicTacToe(TicTacToeInterface):
             '8': ' ',
             '9': ' '
         }
-        self.__is_game_won = False
-        self.__winner = ''
+        self.__board_size = 3
 
-    @staticmethod
-    def welcome():
-        print("Welcome to Tic Tac Toe")
-        print('7' + '|' + '8' + '|' + '9')
-        print('-+-+-')
-        print('4' + '|' + '5' + '|' + '6')
-        print('-+-+-')
-        print('1' + '|' + '2' + '|' + '3')
+    def show_instructions(self):
+        self.draw_board()
         print("Instructions:")
         print("- To play with computer please enter COMP as second player")
         print("- To make your move, select any of the available number(1-9)")
@@ -61,32 +55,24 @@ class TicTacToe(TicTacToeInterface):
         return self.__player_two
 
     def draw_board(self):
-        print(('7' if self.__game_board['7'] == ' ' else self.__game_board['7'])
-              + '|'
-              + ('8' if self.__game_board['8'] ==
-                 ' ' else self.__game_board['8'])
-              + '|'
-              + ('9' if self.__game_board['9'] ==
-                 ' ' else self.__game_board['9'])
-              )
-        print('-+-+-')
-        print(('4' if self.__game_board['4'] == ' ' else self.__game_board['4'])
-              + '|'
-              + ('5' if self.__game_board['5'] ==
-                 ' ' else self.__game_board['5'])
-              + '|'
-              + ('6' if self.__game_board['6'] ==
-                 ' ' else self.__game_board['6'])
-              )
-        print('-+-+-')
-        print(('1' if self.__game_board['1'] == ' ' else self.__game_board['1'])
-              + '|'
-              + ('2' if self.__game_board['2'] ==
-                 ' ' else self.__game_board['2'])
-              + '|'
-              + ('3' if self.__game_board['3'] ==
-                 ' ' else self.__game_board['3'])
-              )
+        j = 1
+        n = self.__board_size
+        for i in range(n):
+            str_one = ""
+            str_two = ""
+            while j <= n*(i+1):
+                cell_value = str(j) if self.__game_board[str(
+                    j)] == ' ' else self.__game_board[str(j)]
+                if j != n*(i+1):
+                    str_one += " "+cell_value+"|" if j <= 9 else cell_value+"|"
+                    str_two += "--+" if j > 9 else "--+"
+                else:
+                    str_one += " "+cell_value if j <= 9 else cell_value
+                    str_two += "--"
+                j = j+1
+            print(str_one)
+            if (i+1) != n:
+                print(str_two)
 
     def get_available_choices(self) -> list:
         valid_choices = []
@@ -126,3 +112,9 @@ class TicTacToe(TicTacToeInterface):
             if self.__game_board[combination[0]] != ' ' and self.__game_board[combination[1]] != ' ' and self.__game_board[combination[2]] != ' ' and (self.__game_board[combination[0]] == self.__game_board[combination[1]] == self.__game_board[combination[2]]):
                 return True, (self.__player_one if self.__game_board[combination[0]] == 'X' else self.__player_two)
         return False, ''
+
+    def set_board_size(self, size: int):
+        self.__game_board = {}
+        self.__board_size = size
+        for i in range(size*size):
+            self.__game_board[str(i+1)] = ' '

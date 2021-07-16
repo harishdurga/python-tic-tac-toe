@@ -4,8 +4,20 @@ import os
 game = TicTacToe()
 is_game_won = False
 winner = ''
-game.welcome()
-# Reading player one information
+
+print("Welcome To Tic Tac Toe")
+
+# Reading board size
+while True:
+    try:
+        game.set_board_size(int((input(
+            'Enter the size for Tic Tac Toe board:')).strip()))
+        break
+    except ValueError as e:
+        print("Invalid size. Please enter valid intenger for board size")
+
+game.show_instructions()
+
 while True:
     try:
         game.set_player_one((input(
@@ -14,6 +26,7 @@ while True:
         print(e)
         continue
     break
+
 
 # Reading player two information
 while True:

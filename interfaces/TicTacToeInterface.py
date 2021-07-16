@@ -1,6 +1,6 @@
 class TicTacToeInterface:
 
-    def start_game(self):
+    def set_board_size(self, size: int):
         pass
 
     def set_player_one(self, name: str):
@@ -9,8 +9,7 @@ class TicTacToeInterface:
     def set_player_two(self, name: str):
         pass
 
-    @staticmethod
-    def welcome():
+    def show_instructions():
         pass
 
     def first_choice_player(self, player: str):
