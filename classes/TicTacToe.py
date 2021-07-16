@@ -3,22 +3,23 @@ import os
 
 
 class TicTacToe(TicTacToeInterface):
-    player_one = ''
-    player_two = ''
-    turn = ''
-    game_board = {
-        '1': ' ',
-        '2': ' ',
-        '3': ' ',
-        '4': ' ',
-        '5': ' ',
-        '6': ' ',
-        '7': ' ',
-        '8': ' ',
-        '9': ' '
-    }
-    is_game_won = False
-    winner = ''
+    def __init__(self) -> None:
+        self.__player_one = ''
+        self.__player_two = ''
+        self.__turn = ''
+        self.__game_board = {
+            '1': ' ',
+            '2': ' ',
+            '3': ' ',
+            '4': ' ',
+            '5': ' ',
+            '6': ' ',
+            '7': ' ',
+            '8': ' ',
+            '9': ' '
+        }
+        self.__is_game_won = False
+        self.__winner = ''
 
     def __welcome(self):
         print("Welcome to Tic Tac Toe")
@@ -33,46 +34,54 @@ class TicTacToe(TicTacToeInterface):
 
     def __get_players(self):
         try:
-            while self.player_one == '':
-                self.player_one = input('Enter the name for first player(X):')
-            while self.player_two == '' or self.player_two == self.player_one:
-                if self.player_two == self.player_one:
+            while self.__player_one == '':
+                self.__player_one = input(
+                    'Enter the name for first player(X):')
+            while self.__player_two == '' or self.__player_two == self.__player_one:
+                if self.__player_two == self.__player_one:
                     print("Please enter a different name for second player(O)")
-                self.player_two = input("Enter the name for second player(O):")
+                self.__player_two = input(
+                    "Enter the name for second player(O):")
         except Exception as e:
             print(e)
 
     def __draw_board(self):
-        print(('7' if self.game_board['7'] == ' ' else self.game_board['7'])
+        print(('7' if self.__game_board['7'] == ' ' else self.__game_board['7'])
               + '|'
-              + ('8' if self.game_board['8'] == ' ' else self.game_board['8'])
+              + ('8' if self.__game_board['8'] ==
+                 ' ' else self.__game_board['8'])
               + '|'
-              + ('9' if self.game_board['9'] == ' ' else self.game_board['9'])
+              + ('9' if self.__game_board['9'] ==
+                 ' ' else self.__game_board['9'])
               )
         print('-+-+-')
-        print(('4' if self.game_board['4'] == ' ' else self.game_board['4'])
+        print(('4' if self.__game_board['4'] == ' ' else self.__game_board['4'])
               + '|'
-              + ('5' if self.game_board['5'] == ' ' else self.game_board['5'])
+              + ('5' if self.__game_board['5'] ==
+                 ' ' else self.__game_board['5'])
               + '|'
-              + ('6' if self.game_board['6'] == ' ' else self.game_board['6'])
+              + ('6' if self.__game_board['6'] ==
+                 ' ' else self.__game_board['6'])
               )
         print('-+-+-')
-        print(('1' if self.game_board['1'] == ' ' else self.game_board['1'])
+        print(('1' if self.__game_board['1'] == ' ' else self.__game_board['1'])
               + '|'
-              + ('2' if self.game_board['2'] == ' ' else self.game_board['2'])
+              + ('2' if self.__game_board['2'] ==
+                 ' ' else self.__game_board['2'])
               + '|'
-              + ('3' if self.game_board['3'] == ' ' else self.game_board['3'])
+              + ('3' if self.__game_board['3'] ==
+                 ' ' else self.__game_board['3'])
               )
 
     def __get_available_choices(self) -> list:
         valid_choices = []
-        for key in self.game_board:
-            if self.game_board[key] == ' ':
+        for key in self.__game_board:
+            if self.__game_board[key] == ' ':
                 valid_choices.append(key)
         return valid_choices
 
     def __is_choice_available(self, choice: str) -> bool:
-        if self.game_board[choice] != ' ':
+        if self.__game_board[choice] != ' ':
             return False
         else:
             return True
@@ -95,37 +104,41 @@ class TicTacToe(TicTacToeInterface):
             ('3', '5', '7')
         ]
         for combination in winning_combinations:
-            if self.game_board[combination[0]] != ' ' and self.game_board[combination[1]] != ' ' and self.game_board[combination[2]] != ' ' and (self.game_board[combination[0]] == self.game_board[combination[1]] == self.game_board[combination[2]]):
-                return True, (self.player_one if self.game_board[combination[0]] == 'X' else self.player_two)
+            if self.__game_board[combination[0]] != ' ' and self.__game_board[combination[1]] != ' ' and self.__game_board[combination[2]] != ' ' and (self.__game_board[combination[0]] == self.__game_board[combination[1]] == self.__game_board[combination[2]]):
+                return True, (self.__player_one if self.__game_board[combination[0]] == 'X' else self.__player_two)
         return False, ''
 
     def start_game(self):
         self.__welcome()
         self.__get_players()
-        self.turn = self.player_one
+        self.__turn = self.__player_one
         for i in range(9):
             self.__draw_board()
-            choice = input("Please enter {}'s({}) choice from ({}):".format(
-                self.turn, ('X' if self.turn == self.player_one else 'O'), ",".join(self.__get_available_choices())))
+
             while True:
+                choice = input("Please enter {}'s({}) choice from ({}):".format(
+                    self.__turn, ('X' if self.__turn == self.__player_one else 'O'), ",".join(self.__get_available_choices())))
                 if self.__is_choice_valid(choice):
                     if self.__is_choice_available(choice):
                         break
                     else:
+                        os.system('cls' if os.name == 'nt' else 'clear')
                         print("Choice {} is not available. Choose any number from ({}).".format(
                             choice, ",".join(self.__get_available_choices())))
                 else:
-                    print("Choice {} is not valid. Please select any number from 1-9.")
-            self.game_board[choice] = 'X' if self.turn == self.player_one else 'O'
-            self.turn = self.player_two if self.turn == self.player_one else self.player_one
-            self.is_game_won, self.winner = self.__get_winner()
-            if self.is_game_won:
+                    os.system('cls' if os.name == 'nt' else 'clear')
+                    print(
+                        "Choice {} is not valid. Please select any number from Choose any number from ({}).".format(choice, ",".join(self.__get_available_choices())))
+            self.__game_board[choice] = 'X' if self.__turn == self.__player_one else 'O'
+            self.__turn = self.__player_two if self.__turn == self.__player_one else self.__player_one
+            self.__is_game_won, self.__winner = self.__get_winner()
+            if self.__is_game_won:
                 os.system('cls' if os.name == 'nt' else 'clear')
                 self.__draw_board()
-                print("player {} won!!!!".format(self.winner))
+                print("player {} won!!!!".format(self.__winner))
                 break
             os.system('cls' if os.name == 'nt' else 'clear')
-        if self.is_game_won == False:
+        if self.__is_game_won == False:
             os.system('cls' if os.name == 'nt' else 'clear')
             self.__draw_board()
             print("It's a draw!!!")
