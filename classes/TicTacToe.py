@@ -1,5 +1,4 @@
 from interfaces import TicTacToeInterface
-import math
 
 
 class TicTacToe(TicTacToeInterface):
@@ -19,6 +18,7 @@ class TicTacToe(TicTacToeInterface):
             '9': ' '
         }
         self.__board_size = 3
+        self.__winning_combinations = []
 
     def show_instructions(self):
         self.draw_board()
@@ -98,20 +98,20 @@ class TicTacToe(TicTacToeInterface):
         self.__turn = self.__player_two if self.__turn == self.__player_one else self.__player_one
 
     def get_winner(self) -> "tuple[bool, str]":
-        winning_combinations = self.get_winning_combinations()
-        for combination in winning_combinations:
+        for combination in self.__winning_combinations:
             row_list = []
             for choice in combination:
                 row_list.append(self.__game_board[choice])
-            if ' ' not in row_list and len(set(row_list)) == 1:
+            if (' ' not in row_list) and len(set(row_list)) == 1:
                 return True, (self.__player_one if self.__game_board[combination[0]] == 'X' else self.__player_two)
-            return False, ''
+        return False, ''
 
     def set_board_size(self, size: int):
         if size < 3:
             raise ValueError
         self.__game_board = {}
         self.__board_size = size
+        self.__winning_combinations = self.get_winning_combinations()
         for i in range(size*size):
             self.__game_board[str(i+1)] = ' '
 
@@ -119,13 +119,34 @@ class TicTacToe(TicTacToeInterface):
         return self.__board_size
 
     def get_winning_combinations(self) -> list:
-        return [
-            ('1', '2', '3'),
-            ('4', '5', '6'),
-            ('7', '8', '9'),
-            ('1', '4', '7'),
-            ('2', '5', '8'),
-            ('3', '6', '9'),
-            ('1', '5', '9'),
-            ('3', '5', '7')
-        ]
+        game_board_list = [
+            [0]*self.__board_size for i in range(self.__board_size)]
+        counter = 1
+        for i in range(self.__board_size):
+            for j in range(self.__board_size):
+                game_board_list[i][j] = str(counter)
+                counter += 1
+        winning_combinations = []
+        # horizontal
+        for i in range(self.__board_size):
+            winning_combinations.append(tuple(game_board_list[i]))
+        # vertical
+        for i in range(self.__board_size):
+            app = []
+            for j in range(self.__board_size):
+                app.append(game_board_list[j][i])
+            winning_combinations.append(tuple(app))
+        # diagonal
+        app = []
+        for i in range(self.__board_size):
+            for j in range(self.__board_size):
+                if i == j:
+                    app.append(game_board_list[i][j])
+        winning_combinations.append(tuple(app))
+        # other diagonal
+        app = []
+        for i in range(self.__board_size):
+            app.append(game_board_list[i][self.__board_size-i-1])
+        winning_combinations.append(tuple(app))
+
+        return winning_combinations
