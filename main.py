@@ -21,6 +21,7 @@ def main():
 
     game.show_instructions()
 
+    # Read player 1 name
     while True:
         try:
             game.set_player_one((input(
@@ -30,7 +31,7 @@ def main():
             continue
         break
 
-    # Reading player two information
+    # Reading player two name
     while True:
         try:
             game.set_player_two(input(
@@ -51,8 +52,12 @@ def main():
             continue
 
     game.draw_board()
+
     for i in range(game.get_board_size()*game.get_board_size()):
         while True:
+            if game.get_turn() == 'COMP':
+                choice = game.get_computer_choice()
+                break
             choice = input("Please enter {}'s({}) choice from ({}):".format(
                 game.get_turn(), ('X' if game.get_turn() == game.get_player_one() else 'O'), ",".join(game.get_available_choices()))).strip()
             if game.is_choice_valid(choice):
@@ -73,6 +78,7 @@ def main():
             game.draw_board()
             print("player {} won!!!!".format(winner))
             break
+
     if is_game_won == False:
         os.system('cls' if os.name == 'nt' else 'clear')
         game.draw_board()

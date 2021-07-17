@@ -63,3 +63,15 @@ class TicTacToeInterface:
     def get_winning_combinations(self) -> "list[tuple]":
         """Get a list of winning combination in the form of tuples"""
         pass
+
+    def get_available_combinations(self) -> "list[tuple]":
+        """Get a list of available combinations in the form of tuples"""
+        pass
+
+    def get_combination_weight(self, combination: "tuple[str]", search_symbol: str) -> int:
+        """Get the weight of a combination in the game. Weight is calculated based on the number of consicutive repetetions of the search_symbol"""
+        pass
+
+    def get_computer_choice(self) -> str:
+        """Get the computer's choice/move"""
+        pass

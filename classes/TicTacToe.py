@@ -1,4 +1,5 @@
 from interfaces import TicTacToeInterface
+import random
 
 
 class TicTacToe(TicTacToeInterface):
@@ -148,3 +149,43 @@ class TicTacToe(TicTacToeInterface):
         winning_combinations.append(tuple(app))
 
         return winning_combinations
+
+    def get_available_combinations(self) -> "list[tuple]":
+        available_combinations = []
+        for combination in self.__winning_combinations:
+            for choice in combination:
+                if self.__game_board[choice] == ' ':
+                    available_combinations.append(combination)
+                    break
+        return available_combinations
+
+    def get_combination_weight(self, combination: "tuple[str]", search_symbol: str) -> int:
+        weight = 0
+        for i in range(1, len(combination)):
+            present = self.__game_board[combination[i]]
+            prev = self.__game_board[combination[i-1]]
+            if present != ' ' and present == search_symbol and present == prev:
+                weight += 1
+        return weight
+
+    def get_computer_choice(self) -> str:
+        # Defend
+        opposite_symbol = 'O' if self.__player_one == 'COMP' else 'X'
+        own_symbol = 'X' if self.__player_one == 'COMP' else 'O'
+        list_dict = []
+        for combination in self.get_available_combinations():
+            weight = self.get_combination_weight(combination, opposite_symbol)
+            if weight == (len(combination)-2):
+                for choice in combination:
+                    if self.__game_board[choice] == ' ':
+                        return choice
+            list_dict.append({'combination': combination, 'weight': self.get_combination_weight(
+                combination, own_symbol)})
+        if len(list_dict) > 0:
+            highly_preferred_combination = max(
+                list_dict, key=lambda k: k['weight'])
+            for choice in highly_preferred_combination['combination']:
+                if self.__game_board[choice] == ' ':
+                    return choice
+        else:
+            return random.choice(self.get_available_choices())
