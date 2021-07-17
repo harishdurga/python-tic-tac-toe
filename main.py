@@ -49,7 +49,7 @@ while True:
         continue
 
 game.draw_board()
-for i in range(9):
+for i in range(game.get_board_size()*game.get_board_size()):
     while True:
         choice = input("Please enter {}'s({}) choice from ({}):".format(
             game.get_turn(), ('X' if game.get_turn() == game.get_player_one() else 'O'), ",".join(game.get_available_choices()))).strip()
@@ -57,11 +57,9 @@ for i in range(9):
             if game.is_choice_available(choice):
                 break
             else:
-                os.system('cls' if os.name == 'nt' else 'clear')
                 print("Choice {} is not available. Choose any number from ({}).".format(
                     choice, ",".join(game.get_available_choices())))
         else:
-            os.system('cls' if os.name == 'nt' else 'clear')
             print(
                 "Choice {} is not valid. Please select any number from Choose any number from ({}).".format(choice, ",".join(game.get_available_choices())))
     game.mark_choice(choice)

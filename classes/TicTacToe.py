@@ -62,7 +62,7 @@ class TicTacToe(TicTacToeInterface):
             str_two = ""
             while j <= n*(i+1):
                 cell_value = str(j) if self.__game_board[str(
-                    j)] == ' ' else self.__game_board[str(j)]
+                    j)] == ' ' else (self.__game_board[str(j)] if j <= 9 else " "+self.__game_board[str(j)])
                 if j != n*(i+1):
                     str_one += " "+cell_value+"|" if j <= 9 else cell_value+"|"
                     str_two += "--+" if j > 9 else "--+"
@@ -88,7 +88,7 @@ class TicTacToe(TicTacToeInterface):
             return True
 
     def is_choice_valid(self, choice: str) -> bool:
-        if choice in ['1', '2', '3', '4', '5', '6', '7', '8', '9']:
+        if choice in self.__game_board.keys():
             return True
         else:
             return False
@@ -98,7 +98,28 @@ class TicTacToe(TicTacToeInterface):
         self.__turn = self.__player_two if self.__turn == self.__player_one else self.__player_one
 
     def get_winner(self) -> "tuple[bool, str]":
-        winning_combinations = [
+        winning_combinations = self.get_winning_combinations()
+        for combination in winning_combinations:
+            row_list = []
+            for choice in combination:
+                row_list.append(self.__game_board[choice])
+            if ' ' not in row_list and len(set(row_list)) == 1:
+                return True, (self.__player_one if self.__game_board[combination[0]] == 'X' else self.__player_two)
+            return False, ''
+
+    def set_board_size(self, size: int):
+        if size < 3:
+            raise ValueError
+        self.__game_board = {}
+        self.__board_size = size
+        for i in range(size*size):
+            self.__game_board[str(i+1)] = ' '
+
+    def get_board_size(self) -> int:
+        return self.__board_size
+
+    def get_winning_combinations(self) -> list:
+        return [
             ('1', '2', '3'),
             ('4', '5', '6'),
             ('7', '8', '9'),
@@ -108,15 +129,3 @@ class TicTacToe(TicTacToeInterface):
             ('1', '5', '9'),
             ('3', '5', '7')
         ]
-        for combination in winning_combinations:
-            if self.__game_board[combination[0]] != ' ' and self.__game_board[combination[1]] != ' ' and self.__game_board[combination[2]] != ' ' and (self.__game_board[combination[0]] == self.__game_board[combination[1]] == self.__game_board[combination[2]]):
-                return True, (self.__player_one if self.__game_board[combination[0]] == 'X' else self.__player_two)
-        return False, ''
-
-    def set_board_size(self, size: int):
-        if size < 3:
-            raise ValueError
-        self.__game_board = {}
-        self.__board_size = size
-        for i in range(size*size):
-            self.__game_board[str(i+1)] = ' '
