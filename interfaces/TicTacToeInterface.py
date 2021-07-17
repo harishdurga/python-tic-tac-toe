@@ -45,5 +45,5 @@ class TicTacToeInterface:
     def get_board_size(self) -> int:
         pass
 
-    def get_winning_combinations(self) -> list:
+    def get_winning_combinations(self) -> "list[tuple]":
         pass

@@ -118,7 +118,7 @@ class TicTacToe(TicTacToeInterface):
     def get_board_size(self) -> int:
         return self.__board_size
 
-    def get_winning_combinations(self) -> list:
+    def get_winning_combinations(self) -> "list[tuple]":
         game_board_list = [
             [0]*self.__board_size for i in range(self.__board_size)]
         counter = 1
@@ -139,9 +139,7 @@ class TicTacToe(TicTacToeInterface):
         # diagonal
         app = []
         for i in range(self.__board_size):
-            for j in range(self.__board_size):
-                if i == j:
-                    app.append(game_board_list[i][j])
+            app.append(game_board_list[i][i])
         winning_combinations.append(tuple(app))
         # other diagonal
         app = []
