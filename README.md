@@ -3,13 +3,17 @@ A **`N*N`** Tic Tac Toe Game Written In Python.
 
 ![Animation](https://user-images.githubusercontent.com/10380630/126044261-d3337cc6-52c9-44f2-9d85-1910d3458fc4.gif)
 
-### Python Version: 3.8.5
+#### Python Version: 3.8.5
 
 #### How to run the Game
 At the project root, run `python3 main.py` and follow the on-screen instructions.
 
 #### How to run tests
 At the project root, run `python3 test_tic_tac_toe_unittest.py` and follow the on-screen instructions.
+
+#### Features
+- N*N board size
+- Play with computer
 
 #### Steps To Play The Game
 - Enter the size of the Tic Tac Toe Board (Minimum size is 3)
