@@ -75,3 +75,7 @@ class TicTacToeInterface:
     def get_computer_choice(self) -> str:
         """Get the computer's choice/move"""
         pass
+
+    def get_game_board(self) -> "dict[str,str]":
+        """Get the game board as a dictionary"""
+        pass
