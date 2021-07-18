@@ -112,7 +112,7 @@ Returns a choice from the list of available choices. This method is useful when 
 game.get_combination_weight(combination=('1','2','3'),search_symbol='X')
 ```
 Valid values for `search_symbol` are `X` and `O`. A combination with higher weight has the more chance of winning the game. This method is used for computer making the choice.
-If `search_symbol` is `X` then and size of the board is 4
+If `search_symbol` is `X` and size of the board is 4 then
 - X X X _ weight=2
 - X _ _ O weight=-1
 - X _ _ X weight=0
