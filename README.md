@@ -11,7 +11,7 @@ A **`N*N`** Tic Tac Toe Game Written In Python.
 At the project root, run `python3 main.py` and follow the on-screen instructions.
 
 #### How to run tests
-At the project root, run `python3 test_tic_tac_toe_unittest.py` and follow the on-screen instructions.
+At the project root, run `python3 test_tic_tac_toe_unittest.py` and follow the on-screen instructions. A github workflow configutaion file has been created to run tests when pushing and committing code to the main branch.
 
 #### Features
 - N*N board size
