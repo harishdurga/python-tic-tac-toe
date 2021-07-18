@@ -117,6 +117,7 @@ If `search_symbol` is `X` and size of the board is 4 then
 - X _ _ O weight=-1
 - X _ _ X weight=0
 - O _ _ _ weight = -1
+- X X _ _ weight  = 1
 
 ### Interface
 ```python
