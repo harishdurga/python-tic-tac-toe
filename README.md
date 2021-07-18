@@ -1,6 +1,8 @@
 # Tic Tac Toe
-A **`N*N`** Tic Tac Toe Game Written In Python.
+[![](https://www.code-inspector.com/project/25394/score/svg)](https://frontend.code-inspector.com/public/project/25394/python-tic-tac-toe/dashboard)
+[![](https://www.code-inspector.com/project/25394/status/svg)](https://frontend.code-inspector.com/public/project/25394/python-tic-tac-toe/dashboard)
 
+A **`N*N`** Tic Tac Toe Game Written In Python.
 ![Animation](https://user-images.githubusercontent.com/10380630/126044261-d3337cc6-52c9-44f2-9d85-1910d3458fc4.gif)
 
 #### Python Version: 3.8.5
